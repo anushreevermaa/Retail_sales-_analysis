@@ -1,18 +1,9 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from datetime import datetime
-
-
-# In[7]:
-
 
 # Load dataset
 url = r"C:\Users\Verma\OneDrive\Desktop\Dataset\retail_sales_dataset.csv"
@@ -21,9 +12,6 @@ data = pd.read_csv(url)
 
 # Display the first few rows of the dataset
 data.head()
-
-
-# In[14]:
 
 
 # Check for missing values
@@ -47,9 +35,6 @@ data['Total Amount'] = pd.to_numeric(data['Total Amount'], errors='coerce')
 print(data.info())
 
 
-# In[15]:
-
-
 # Descriptive statistics
 print(data.describe())
 
@@ -58,9 +43,6 @@ daily_sales = data.groupby('Date')['Total Amount'].sum().reset_index()
 
 # Sales by Product Category
 category_sales = data.groupby('Product Category')['Total Amount'].sum().sort_values(ascending=False)
-
-
-# In[16]:
 
 
 # Extract year and month from 'Date'
@@ -86,9 +68,6 @@ print(retention_rate)
 
 
 
-# In[17]:
-
-
 # Recency: Calculate the number of days since the last purchase
 current_date = data['Date'].max()
 rfm = data.groupby('Customer ID').agg({
@@ -112,8 +91,6 @@ rfm['RFM_Score'] = rfm.R.astype(str) + rfm.F.astype(str) + rfm.M.astype(str)
 print(rfm.head())
 
 
-# In[18]:
-
 
 import matplotlib.pyplot as plt
 
@@ -126,8 +103,6 @@ plt.grid(True)
 plt.show()
 
 
-# In[19]:
-
 
 plt.figure(figsize=(10, 6))
 category_sales.plot(kind='bar')
@@ -137,9 +112,6 @@ plt.ylabel('Total Sales')
 plt.show()
 
 
-# In[20]:
-
-
 plt.figure(figsize=(12, 8))
 sns.heatmap(retention_rate, annot=True, cmap='coolwarm')
 plt.title('Cohort Analysis - Retention Rate')
@@ -147,8 +119,6 @@ plt.ylabel('Cohort Group')
 plt.xlabel('Cohort Period')
 plt.show()
 
-
-# In[38]:
 
 
 from prophet import Prophet
@@ -180,15 +150,6 @@ plt.title('Sales Forecast')
 plt.xlabel('Date')
 plt.ylabel('Total Sales')
 plt.show()
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
 
 
 
